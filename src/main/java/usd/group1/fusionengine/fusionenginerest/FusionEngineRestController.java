@@ -22,21 +22,30 @@ public class FusionEngineRestController {
     /* The Logic Converter */
     private static final FusionEngineLogic logicConverter = new FusionEngineLogic();
 
+    /* The Persistence Class */
+    // TODO: Instantiate a static object to store data
+
     @RequestMapping(method=RequestMethod.POST, path=submitEndpoint)
     SubmitResponse submitCoordinates (
             @RequestParam(value="latitude") String latitude,
             @RequestParam(value="longitude") String longitude) {
         logger.info("Received request to submit coordinates: {}, {}", latitude, longitude);
 
+        // Generate a unique UUID at time of evocation
+        String uuid = UUID.randomUUID().toString();
+
         // Convert the inputs and get results
         logicConverter.convert(latitude, longitude);
         String latResult = logicConverter.getLatitude();
         String lonResult = logicConverter.getLongitude();
 
-        // Generate a unique UUID at time of evocation
-        UUID uuid = UUID.randomUUID();
+        // Persist the results
+        // TODO: Store the results in storage class
 
         // The response body
         return new SubmitResponse(uuid, "Stored object with coordinates: " + latResult + ", " + lonResult);
     }
+
+    // TODO: Create a method to query for results 
+
 }

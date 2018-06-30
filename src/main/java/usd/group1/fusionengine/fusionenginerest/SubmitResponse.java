@@ -11,8 +11,8 @@ public class SubmitResponse {
     private final String uuid;
     private final String message;
 
-    public SubmitResponse(UUID uuid, String message) {
-        this.uuid = uuid.toString();
+    public SubmitResponse(String uuid, String message) {
+        this.uuid = uuid;
         this.message = message;
     }
 
