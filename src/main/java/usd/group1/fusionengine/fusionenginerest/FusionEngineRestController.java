@@ -21,15 +21,17 @@ public class FusionEngineRestController {
 
     @RequestMapping(method=RequestMethod.POST, path=submitEndpoint)
     SubmitResponse submitCoordinates (
-            @RequestParam(value="latitude") String latitude,
-            @RequestParam(value="longitude") String longitude) {
-        logger.info("Received request to submit coordinates: {}, {}", latitude, longitude);
+            @RequestParam(value="latitude") Double latitude,
+            @RequestParam(value="longitude") Double longitude) {
+        logger.info("Received request to submit coordinates: {}, {}",
+                String.valueOf(latitude), String.valueOf(longitude));
 
         // The Logic class will store the coordinates and return a UUID
         // TODO: Implement Logic Class here
 
         // Temporary UUID generated here for testing
         UUID uuid = UUID.randomUUID();
-        return new SubmitResponse(uuid, "Received request to submit coordinates: " + latitude + ", " + longitude);
+        return new SubmitResponse(uuid, "Received request to submit coordinates: " +
+                String.valueOf(latitude) + ", " + String.valueOf(longitude));
     }
 }
