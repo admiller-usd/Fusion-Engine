@@ -17,13 +17,9 @@ public class FusionEngineRestController {
 
     /* The constant logger */
     private static final Logger logger = LogManager.getLogger(FusionEngineRestController.class);
+
+    /* REST Endpoint for submitting coordinates */
     private static final String submitEndpoint = "/submit";
-
-    /* The Logic Converter */
-    private static final FusionEngineLogic logicConverter = new FusionEngineLogic();
-
-    /* The Persistence Class */
-    // TODO: Instantiate a static object to store data
 
     @RequestMapping(method=RequestMethod.POST, path=submitEndpoint)
     SubmitResponse submitCoordinates (
@@ -35,9 +31,9 @@ public class FusionEngineRestController {
         String uuid = UUID.randomUUID().toString();
 
         // Convert the inputs and get results
-        logicConverter.convert(latitude, longitude);
-        String latResult = logicConverter.getLatitude();
-        String lonResult = logicConverter.getLongitude();
+        FusionEngineLogic.convert(latitude, longitude);
+        String latResult = FusionEngineLogic.getLatitude();
+        String lonResult = FusionEngineLogic.getLongitude();
 
         // Persist the results
         // TODO: Store the results in storage class
@@ -46,6 +42,6 @@ public class FusionEngineRestController {
         return new SubmitResponse(uuid, "Stored object with coordinates: " + latResult + ", " + lonResult);
     }
 
-    // TODO: Create a method to query for results 
+    // TODO: Create a method to query for results
 
 }
