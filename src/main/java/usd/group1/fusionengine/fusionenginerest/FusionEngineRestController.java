@@ -19,17 +19,24 @@ public class FusionEngineRestController {
     private static final Logger logger = LogManager.getLogger(FusionEngineRestController.class);
     private static final String submitEndpoint = "/submit";
 
+    /* The Logic Converter */
+    private static final FusionEngineLogic logicConverter = new FusionEngineLogic();
+
     @RequestMapping(method=RequestMethod.POST, path=submitEndpoint)
     SubmitResponse submitCoordinates (
             @RequestParam(value="latitude") String latitude,
             @RequestParam(value="longitude") String longitude) {
         logger.info("Received request to submit coordinates: {}, {}", latitude, longitude);
 
-        // The Logic class will store the coordinates and return a UUID
-        // TODO: Implement Logic Class here
+        // Convert the inputs and get results
+        logicConverter.convert(latitude, longitude);
+        String latResult = logicConverter.getLatitude();
+        String lonResult = logicConverter.getLongitude();
 
-        // Temporary UUID generated here for testing
+        // Generate a unique UUID at time of evocation
         UUID uuid = UUID.randomUUID();
-        return new SubmitResponse(uuid, "Received request to submit coordinates: " + latitude + ", " + longitude);
+
+        // The response body
+        return new SubmitResponse(uuid, "Stored object with coordinates: " + latResult + ", " + lonResult);
     }
 }
