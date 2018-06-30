@@ -8,15 +8,15 @@ import java.util.UUID;
  */
 public class SubmitResponse {
 
-    private final UUID uuid;
+    private final String uuid;
     private final String message;
 
     public SubmitResponse(UUID uuid, String message) {
-        this.uuid = uuid;
+        this.uuid = uuid.toString();
         this.message = message;
     }
 
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
