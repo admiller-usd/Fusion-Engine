@@ -18,7 +18,7 @@ public class FusionEngineDataStore {
     private static final Logger logger = LogManager.getLogger(FusionEngineDataStore.class);
 
     /* The shared storage map */
-    private static Map<String, List<String>> storageMap = new HashMap<>();
+    private static final Map<String, List<String>> storageMap = new HashMap<>();
 
     public static void storeCoordinates (String uuid, String latitude, String longitude) {
         logger.info("storeCoordinates: received uuid {}, " +
