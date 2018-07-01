@@ -21,6 +21,9 @@ public class FusionEngineRestController {
     /* REST Endpoint for submitting coordinates */
     private static final String submitEndpoint = "/submit";
 
+    /* REST Endpoint for querying for coordinates */
+    private static final String queryEndpoint = "/query";
+
     @RequestMapping(method=RequestMethod.POST, path=submitEndpoint)
     SubmitResponse submitCoordinates (
             @RequestParam(value="latitude") String latitude,
@@ -36,12 +39,22 @@ public class FusionEngineRestController {
         String lonResult = FusionEngineLogic.getLongitude();
 
         // Persist the results
-        // TODO: Store the results in storage class
+        FusionEngineDataStore.storeCoordinates(uuid, latResult, lonResult);
 
         // The response body
         return new SubmitResponse(uuid, "Stored object with coordinates: " + latResult + ", " + lonResult);
     }
 
-    // TODO: Create a method to query for results
+    @RequestMapping(method=RequestMethod.GET, path=queryEndpoint)
+    public QueryResponseSimple QueryResult(
+            @RequestParam(value="uuid") String uuid) throws NoUUIDFoundException {
 
+        // query for coordinates
+        QueryResponseSimple response = FusionEngineDataStore.retrieveCoordinates(uuid);
+        if (response.getUuid().equalsIgnoreCase("null")) {
+            throw new NoUUIDFoundException("Could not find resource with UUID: " + uuid);
+        } else {
+            return response;
+        }
+    }
 }

@@ -12,10 +12,10 @@ public class QueryResponseSimple {
     private final String longitude;
     private final String uuid;
 
-    public QueryResponseSimple(String longitude, String latitude, UUID uuid) {
+    public QueryResponseSimple(String uuid, String longitude, String latitude) {
+        this.uuid = uuid;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.uuid = uuid.toString();
     }
 
     public String getUuid() {
