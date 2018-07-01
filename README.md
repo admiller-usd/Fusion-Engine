@@ -20,6 +20,6 @@ If successful, a JSON response body will be returned with a UUID and coordinates
 #### Querying for Coordinates
 All submitted coordinates are stored in the Fusion Engine Data Store, and referenced by a UUID primary key. 
 External services can query for coordinates by UUID. </br>
-The endpoint is "/query" and requires one input parameter, a UUID string 
+The endpoint is "/query" and requires one input parameter, a UUID string </br>
 If successful, the JSON response will contain the UUID and associated coordinates. 
 If no UUID was found, a "404 Bad Request" is returned. 
