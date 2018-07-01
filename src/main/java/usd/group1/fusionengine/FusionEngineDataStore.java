@@ -3,6 +3,7 @@ package usd.group1.fusionengine;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import usd.group1.fusionengine.exceptions.NoUUIDFoundException;
+import usd.group1.fusionengine.responses.json.QueryResponseSimple;
 
 import java.util.ArrayList;
 import java.util.HashMap;
