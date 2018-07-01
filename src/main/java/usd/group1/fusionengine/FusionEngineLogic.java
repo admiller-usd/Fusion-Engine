@@ -1,5 +1,5 @@
 
-package usd.group1.fusionengine.fusionenginerest;
+package usd.group1.fusionengine;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,8 +8,7 @@ import java.text.DecimalFormat;
 
 
 /**
- * The class that handles the logic for storing coordinates and returning
- * different formats
+ * The class that handles the formatting of coordinates
  */
 public class FusionEngineLogic {
 
@@ -23,10 +22,9 @@ public class FusionEngineLogic {
 
 	public static double lat = 0;
 	public static double lng = 0;
-	public static int UUID = 1; //is a UUID increment sufficient? 
 	public static DecimalFormat nf =  (DecimalFormat) DecimalFormat.getInstance();
 
-	public static void convert(String Latitude, String Longitude) { // good enough with two parameters?
+	public static void convert(String Latitude, String Longitude) {
 
 	        logger.info("Convert: Received latitude {} and longitude {}", Latitude, Longitude);
 
@@ -56,12 +54,10 @@ public class FusionEngineLogic {
 
     		nf.setMaximumFractionDigits(5);
     		nf.setMinimumFractionDigits(5);
-    		++UUID;
-    		// is this where I should log the UUID & how should I do this?
-    	System.out.println("Lat ="+nf.format(lat)+" Long ="+nf.format(lng));
+    	    System.out.println("Lat ="+nf.format(lat)+" Long ="+nf.format(lng));
     	}
 
-	public static String getLatitude(){ // can we just be returning the static data or should somebody be passing us the UUID and we go get that from the logger?
+	public static String getLatitude(){
     		nf.setMaximumFractionDigits(5);
     		nf.setMinimumFractionDigits(5);
     		return nf.format(lat);

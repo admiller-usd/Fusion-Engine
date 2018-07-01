@@ -1,4 +1,4 @@
-package usd.group1.fusionengine.fusionenginerest;
+package usd.group1.fusionengine;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import usd.group1.fusionengine.exceptions.NoUUIDFoundException;
+import usd.group1.fusionengine.responses.json.QueryResponseSimple;
+import usd.group1.fusionengine.responses.json.SubmitResponse;
 
 import java.util.UUID;
 
@@ -50,11 +53,6 @@ public class FusionEngineRestController {
             @RequestParam(value="uuid") String uuid) throws NoUUIDFoundException {
 
         // query for coordinates
-        QueryResponseSimple response = FusionEngineDataStore.retrieveCoordinates(uuid);
-        if (response.getUuid().equalsIgnoreCase("null")) {
-            throw new NoUUIDFoundException("Could not find resource with UUID: " + uuid);
-        } else {
-            return response;
-        }
+        return FusionEngineDataStore.retrieveCoordinates(uuid);
     }
 }
