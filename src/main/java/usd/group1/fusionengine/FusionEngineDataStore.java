@@ -46,8 +46,7 @@ public class FusionEngineDataStore {
                 return new QueryResponseSimple(uuid, entry.getValue().get(0), entry.getValue().get(1));
             }
         }
-        // If there was no match, return null values
-        logger.info("No object with uuid {} was found. Returning null object", uuid);
+        // If there was no match, throw a "No UUID" exception
         throw new NoUUIDFoundException("No object was found with UUID: " + uuid);
     }
 }
