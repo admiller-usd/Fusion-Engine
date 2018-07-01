@@ -19,7 +19,7 @@ The endpoint is: "/submit" and requires two input parameters: latitude and longi
 If successful, a JSON response body will be returned with a UUID and coordinates in the response body. </br>
 #### Querying for Coordinates
 All submitted coordinates are stored in the Fusion Engine Data Store, and referenced by a UUID primary key. 
-External services can query for coordinates by UUID. </br>
+External services can query for coordinates with a GET request. </br>
 The endpoint is "/query" and requires one input parameter, a UUID string </br>
 If successful, the JSON response will contain the UUID and associated coordinates. 
 If no UUID was found, a "404 Bad Request" is returned. 
