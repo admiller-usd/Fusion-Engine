@@ -21,15 +21,31 @@ public class FusionEngineDataStore {
     private static final Map<String, List<String>> storageMap = new HashMap<>();
 
     public static void storeCoordinates (String uuid, String latitude, String longitude) {
-        logger.info("storeCoordinates: received uuid {}, " +
-                "Latitude {}, Longitude {}", uuid, latitude, longitude);
+        logger.info("request to store object with uuid {}, Latitude {}, " +
+                "Longitude {}", uuid, latitude, longitude);
 
         List<String> coordinates = new ArrayList<>();
         coordinates.add(latitude);
         coordinates.add(longitude);
 
+        // Store coordinates in HashMap with UUID as key
         storageMap.put(uuid, coordinates);
-        logger.info("Stored object with uuid: {}", uuid);
+        logger.info("Stored object with uuid: {}, coordinates {}, {}",
+                uuid, coordinates.get(0), coordinates.get(1));
     }
 
+    public static QueryResponseSimple retrieveCoordinates (String uuid) {
+        logger.info("request to retrieve object with uuid: {}", uuid);
+
+        // Iterate through HashMap and find the object
+        for (Map.Entry<String, List<String>> entry : storageMap.entrySet()) {
+            if (entry.getKey().equalsIgnoreCase(uuid)) {
+                logger.info("matched object found with uuid {},", uuid);
+                return new QueryResponseSimple(uuid, entry.getValue().get(0), entry.getValue().get(1));
+            }
+        }
+        // If there was no match, return null values
+        logger.info("No object with uuid {} was found. Returning null object", uuid);
+        return new QueryResponseSimple("null", "null", "null");
+    }
 }
