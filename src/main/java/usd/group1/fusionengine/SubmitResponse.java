@@ -1,4 +1,4 @@
-package usd.group1.fusionengine.fusionenginerest;
+package usd.group1.fusionengine;
 
 import java.util.UUID;
 

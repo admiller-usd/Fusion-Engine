@@ -1,7 +1,8 @@
-package usd.group1.fusionengine.fusionenginerest;
+package usd.group1.fusionengine;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import usd.group1.fusionengine.exceptions.NoUUIDFoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class FusionEngineDataStore {
                 uuid, coordinates.get(0), coordinates.get(1));
     }
 
-    public static QueryResponseSimple retrieveCoordinates (String uuid) {
+    public static QueryResponseSimple retrieveCoordinates (String uuid) throws NoUUIDFoundException {
         logger.info("request to retrieve object with uuid: {}", uuid);
 
         // Iterate through HashMap and find the object
@@ -46,6 +47,6 @@ public class FusionEngineDataStore {
         }
         // If there was no match, return null values
         logger.info("No object with uuid {} was found. Returning null object", uuid);
-        return new QueryResponseSimple("null", "null", "null");
+        throw new NoUUIDFoundException("No object was found with UUID: " + uuid);
     }
 }

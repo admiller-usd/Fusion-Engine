@@ -1,4 +1,4 @@
-package usd.group1.fusionengine.fusionenginerest;
+package usd.group1.fusionengine;
 
 import java.util.UUID;
 
@@ -8,9 +8,9 @@ import java.util.UUID;
  */
 public class QueryResponseSimple {
 
+    private final String uuid;
     private final String latitude;
     private final String longitude;
-    private final String uuid;
 
     public QueryResponseSimple(String uuid, String longitude, String latitude) {
         this.uuid = uuid;
