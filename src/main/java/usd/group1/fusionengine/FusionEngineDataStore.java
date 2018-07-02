@@ -22,6 +22,12 @@ public class FusionEngineDataStore {
     /* The shared storage map */
     private static final Map<String, List<String>> storageMap = new HashMap<>();
 
+    /**
+     * Method that stores Coordinates and maps them to a UUID
+     * @param uuid
+     * @param latitude
+     * @param longitude
+     */
     public static void storeCoordinates (String uuid, String latitude, String longitude) {
         logger.info("request to store object with uuid {}, Latitude {}, " +
                 "Longitude {}", uuid, latitude, longitude);
@@ -36,6 +42,12 @@ public class FusionEngineDataStore {
                 uuid, coordinates.get(0), coordinates.get(1));
     }
 
+    /**
+     * Method retrieves a set of coordinates by a given UUID
+     * @param uuid
+     * @return
+     * @throws NoUUIDFoundException
+     */
     public static QueryResponseSimple retrieveCoordinates (String uuid) throws NoUUIDFoundException {
         logger.info("request to retrieve object with uuid: {}", uuid);
 
