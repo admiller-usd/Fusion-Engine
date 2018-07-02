@@ -11,7 +11,6 @@ import java.util.UUID;
 
 public class FusionEngineLogicTest {
 
-    @Ignore
     @Test
     public void input_negative_lat_should_return_negative_lat()
             throws BadFormattedRequestException, NoUUIDFoundException {
@@ -27,9 +26,10 @@ public class FusionEngineLogicTest {
 
         FusionEngineDataStore.storeCoordinates(uuid, latResult, lonResult);
         QueryResponseSimple response = FusionEngineDataStore.retrieveCoordinates(uuid);
+        System.out.println(response.getLatitude());
 
         // Assert
-        Assert.assertEquals(-3, response.getLatitude());
+        Assert.assertEquals("-3.00000", response.getLatitude());
     }
 
 }
