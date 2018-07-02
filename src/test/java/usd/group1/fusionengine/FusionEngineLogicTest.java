@@ -1,6 +1,7 @@
 package usd.group1.fusionengine;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import usd.group1.fusionengine.exceptions.BadFormattedRequestException;
 import usd.group1.fusionengine.exceptions.NoUUIDFoundException;
@@ -10,6 +11,7 @@ import java.util.UUID;
 
 public class FusionEngineLogicTest {
 
+    @Ignore
     @Test
     public void input_negative_lat_should_return_negative_lat()
             throws BadFormattedRequestException, NoUUIDFoundException {
