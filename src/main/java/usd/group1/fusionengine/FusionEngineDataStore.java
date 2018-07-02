@@ -54,7 +54,8 @@ public class FusionEngineDataStore {
         // Iterate through HashMap and find the object
         for (Map.Entry<String, List<String>> entry : storageMap.entrySet()) {
             if (entry.getKey().equalsIgnoreCase(uuid)) {
-                logger.info("matched object found with uuid {},", uuid);
+                logger.info("matched object found with uuid {}, latitude {}, longitude {}",
+                        uuid, entry.getValue().get(0), entry.getValue().get(1));
                 return new QueryResponseSimple(uuid, entry.getValue().get(0), entry.getValue().get(1));
             }
         }
