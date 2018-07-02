@@ -3,8 +3,11 @@ package usd.group1.fusionengine;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import usd.group1.fusionengine.exceptions.BadFormattedRequestException;
 
 import java.text.DecimalFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -15,16 +18,55 @@ public class FusionEngineLogic {
 	/* The constant logger */
 	private static final Logger logger = LogManager.getLogger(FusionEngineLogic.class);
 
-	/*
-	 * Needs to take in two coordinates and should generate a "unique" ID so
-	 * someone can query for the results later on
-	 */
-
 	public static double lat = 0;
 	public static double lng = 0;
 	public static DecimalFormat nf =  (DecimalFormat) DecimalFormat.getInstance();
 
-	public static void convert(String Latitude, String Longitude) {
+    /**
+     * Coordinates can be submitted in three formats: decimal, minutes, or minutes-seconds
+     * @param Latitude
+     * @param Longitude
+     */
+	public static void convert(String Latitude, String Longitude) throws BadFormattedRequestException {
+
+	    Pattern pattern = Pattern.compile("[A-z]");
+        Matcher checkLat = pattern.matcher(Latitude);
+        Matcher checkLon = pattern.matcher(Longitude);
+
+	    // Check if Decimal Format. If so, we can just store them and be done
+        // Decimal format should not contain letters, apostrophes, or quotes
+        if ((Latitude.indexOf('\'') < 0)&&(Longitude.indexOf('\'') < 0)&&
+                (!checkLat.find())&&(!checkLon.find())) {
+            logger.info("Coordinates {} and {} are in decimal format", Latitude, Longitude);
+            lat = Double.valueOf(Latitude.trim());
+            lng = Double.valueOf(Longitude.trim());
+        }
+        // Check if Minutes-Seconds Format
+        // Minutes-Seconds should contain both apostrophes and quotes
+        else if (((Latitude.indexOf('\'') >= 0)&&(Longitude.indexOf('\'') >= 0))&&
+                ((Latitude.indexOf('\"') >= 0)&&(Longitude.indexOf('\"') >= 0))) {
+            logger.info("Coordinates {} and {} are in minutes-seconds format", Latitude, Longitude);
+            convertMinutesSeconds(Latitude, Longitude);
+        }
+        // Check if Minutes format (no quotes)
+        // Minutes format should only contain apostrophes
+        else if ((Latitude.indexOf('\'') >= 0)&&(Longitude.indexOf('\'') >= 0)) {
+            logger.info("Coordinates {} and {} are in minutes format", Latitude, Longitude);
+            convertMinutes(Latitude, Longitude);
+        }
+        else {
+            logger.info("Bad request to format {} and {}", Latitude, Longitude);
+            throw new BadFormattedRequestException("The request to store {} and {} did not match a " +
+                    "standard coordinate format.");
+        }
+    }
+
+    /**
+     * Private method for converting to Minutes Seconds format
+     * @param Latitude
+     * @param Longitude
+     */
+	private static void convertMinutesSeconds(String Latitude, String Longitude) {
 
 	        logger.info("Convert: Received latitude {} and longitude {}", Latitude, Longitude);
 
@@ -56,6 +98,15 @@ public class FusionEngineLogic {
     		nf.setMinimumFractionDigits(5);
     	    System.out.println("Lat ="+nf.format(lat)+" Long ="+nf.format(lng));
     	}
+
+    /**
+     * Private method for converting minutes format
+     * @param Latitude
+     * @param Longitude
+     */
+    	private static void convertMinutes(String Latitude, String Longitude) {
+    	    //TODO: Implement logic here
+        }
 
 	public static String getLatitude(){
     		nf.setMaximumFractionDigits(5);
