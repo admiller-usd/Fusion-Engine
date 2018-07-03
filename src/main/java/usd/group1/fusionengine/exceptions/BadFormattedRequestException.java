@@ -1,3 +1,9 @@
+/*                                                 *
+ * ----- GROUP 1 ----- GROUP 1 ----- GROUP 1 ----- *
+ *                  Programmers:                   *
+ *                  Austin Miller                  *
+ *                 Kathrine Lavieri                *
+ *                                                 */
 package usd.group1.fusionengine.exceptions;
 
 import org.springframework.http.HttpStatus;
