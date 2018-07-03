@@ -1,15 +1,38 @@
+/*                                                 *
+ * ----- GROUP 1 ----- GROUP 1 ----- GROUP 1 ----- *
+ *                  Programmers:                   *
+ *                  Austin Miller                  *
+ *                 Kathrine Lavieri                *
+ *                                                 */
 package usd.group1.fusionengine;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
 import usd.group1.fusionengine.exceptions.BadFormattedRequestException;
 import usd.group1.fusionengine.exceptions.NoUUIDFoundException;
 import usd.group1.fusionengine.responses.json.QueryResponseSimple;
 
 import java.util.UUID;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class FusionEngineLogicTest {
+
+    // MockMvc allows us to test HTTP Requests
+    @Autowired
+    private MockMvc mockMvc;
 
     @Test
     public void input_negative_lat_should_return_negative_lat()
@@ -115,6 +138,30 @@ public class FusionEngineLogicTest {
         // Assert
         Assert.assertEquals("93.98765", response.getLatitude());
         Assert.assertEquals("-27.54321", response.getLongitude());
+    }
+
+
+
+    // Below methods test the RESTful interface
+
+    @Test
+    public void submit_only_one_coordinate_via_rest_should_throw_400_bad_request()
+            throws Exception {
+        // Arrange
+        String request = "/submit?latitude=5";
+
+        // Act and Assert
+        this.mockMvc.perform(post(request)).andDo(print()).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void query_for_missing_uuid_via_rest_should_throw_404_not_found()
+            throws Exception {
+        // Arrange
+        String request = "/query?uuid=12345";
+
+        // Act and Assert
+        this.mockMvc.perform(get(request)).andDo(print()).andExpect(status().isNotFound());
     }
 
 }
