@@ -140,6 +140,27 @@ public class FusionEngineLogicTest {
         Assert.assertEquals("-27.54321", response.getLongitude());
     }
 
+    @Test
+    public void input_minutes_seconds_format_should_return_decimal_format()
+            throws BadFormattedRequestException, NoUUIDFoundException {
+        // Arrange
+        String uuid = UUID.randomUUID().toString();
+        String lat = "32 18' 23.1\" N";
+        String lon = "117 15’ 41.3\" E";
+
+        // Act
+        FusionEngineLogic.convert(lat, lon);
+        String latResult = FusionEngineLogic.getLatitude();
+        String lonResult = FusionEngineLogic.getLongitude();
+
+        FusionEngineDataStore.storeCoordinates(uuid, latResult, lonResult);
+        QueryResponseSimple response = FusionEngineDataStore.retrieveCoordinates(uuid);
+        System.out.println(response.getLatitude());
+
+        // Assert
+        Assert.assertEquals("32.30642", response.getLatitude());
+        Assert.assertEquals("117.26147", response.getLongitude());
+    }
 
 
     // Below methods test the RESTful interface
