@@ -1,9 +1,3 @@
-/*                                                 *
- * ----- GROUP 1 ----- GROUP 1 ----- GROUP 1 ----- *
- *                  Programmers:                   *
- *                  Austin Miller                  *
- *                 Kathrine Lavieri                *
- *                                                 */
 package usd.group1.fusionengine;
 
 import org.apache.logging.log4j.LogManager;
@@ -110,7 +104,35 @@ public class FusionEngineLogic {
      * @param Longitude
      */
     	private static void convertMinutes(String Latitude, String Longitude) {
-    	    //TODO: Implement logic here
+    		 logger.info("Convert: Received latitude {} and longitude {}", Latitude, Longitude);
+
+ 	        // Convert the Latitude
+     		String[] fields = Latitude.trim().split(" ");
+     		double degree = Double.parseDouble(fields[0].split("[^0-9]")[0]);
+     		double minute = Double.parseDouble(fields[1].split("[^0-9]")[0]) / 60.0;
+  
+     		char direction = fields[3].charAt(0);
+     		if (direction == 'N') {
+     			lat = degree + minute;
+     		} else if (direction == 'S') {
+     			lat = -degree - minute;
+     		}
+
+     		// Convert the Longitude
+     		fields = Longitude.trim().split(" ");
+     		degree = Double.parseDouble(fields[0].split("[^0-9]")[0]);
+     		minute = Double.parseDouble(fields[1].split("[^0-9]")[0]) / 60.0;
+     		
+     		direction = fields[3].charAt(0);
+     		if (direction == 'E') {
+     			lng = degree + minute;
+     		} else if (direction == 'W' ) {
+     			lng = -degree - minute;
+     		}
+
+     		nf.setMaximumFractionDigits(5);
+     		nf.setMinimumFractionDigits(5);
+     	    System.out.println("Lat ="+nf.format(lat)+" Long ="+nf.format(lng));
         }
 
 	public static String getLatitude(){
@@ -126,4 +148,3 @@ public class FusionEngineLogic {
     	}
 
 }
-
