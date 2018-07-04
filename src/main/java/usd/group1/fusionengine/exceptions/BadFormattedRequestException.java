@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Request not formatted properly")
 public class BadFormattedRequestException extends Exception {
 
-    public BadFormattedRequestException(String message) {
+    public BadFormattedRequestException(String message)  {
         super(message);
     }
 }

@@ -110,8 +110,8 @@ public class FusionEngineLogic {
      		String[] fields = Latitude.trim().split(" ");
      		double degree = Double.parseDouble(fields[0].split("[^0-9]")[0]);
      		double minute = Double.parseDouble(fields[1].split("[^0-9]")[0]) / 60.0;
-  
-     		char direction = fields[3].charAt(0);
+
+     		char direction = fields[2].charAt(0);
      		if (direction == 'N') {
      			lat = degree + minute;
      		} else if (direction == 'S') {
@@ -122,8 +122,8 @@ public class FusionEngineLogic {
      		fields = Longitude.trim().split(" ");
      		degree = Double.parseDouble(fields[0].split("[^0-9]")[0]);
      		minute = Double.parseDouble(fields[1].split("[^0-9]")[0]) / 60.0;
-     		
-     		direction = fields[3].charAt(0);
+
+     		direction = fields[2].charAt(0);
      		if (direction == 'E') {
      			lng = degree + minute;
      		} else if (direction == 'W' ) {
