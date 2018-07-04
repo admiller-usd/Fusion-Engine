@@ -182,11 +182,21 @@ public class FusionEngineLogicTest {
         System.out.println(response.getLatitude());
 
         // Assert
-        Assert.assertEquals("32.30642", response.getLatitude());
-        Assert.assertEquals("117.26147", response.getLongitude());
+        Assert.assertEquals("32.30000", response.getLatitude());
+        Assert.assertEquals("118.45000", response.getLongitude());
     }
 
     // Below methods test the RESTful interface
+
+    @Test
+    public void submit_two_coordinates_via_rest_should_return_201_created()
+            throws Exception {
+        // Arrange
+        String request = "/submit?latitude=10.12345&longitude=-112.09876";
+
+        // Act and Assert
+        mockMvc.perform(post(request)).andDo(print()).andExpect(status().isCreated());
+    }
 
     @Test
     public void submit_only_one_coordinate_via_rest_should_throw_400_bad_request()
@@ -195,7 +205,7 @@ public class FusionEngineLogicTest {
         String request = "/submit?latitude=5";
 
         // Act and Assert
-        this.mockMvc.perform(post(request)).andDo(print()).andExpect(status().isBadRequest());
+        mockMvc.perform(post(request)).andDo(print()).andExpect(status().isBadRequest());
     }
 
     @Test
@@ -205,7 +215,7 @@ public class FusionEngineLogicTest {
         String request = "/query?uuid=12345";
 
         // Act and Assert
-        this.mockMvc.perform(get(request)).andDo(print()).andExpect(status().isNotFound());
+        mockMvc.perform(get(request)).andDo(print()).andExpect(status().isNotFound());
     }
 
 }
