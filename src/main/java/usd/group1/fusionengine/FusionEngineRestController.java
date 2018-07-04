@@ -8,6 +8,8 @@ package usd.group1.fusionengine;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,9 +66,7 @@ public class FusionEngineRestController {
         SubmitResponse result = new SubmitResponse(uuid, "Stored object with coordinates: " +
                 latResult + ", " + lonResult);
 
-        ResponseEntity<SubmitResponse> response = new ResponseEntity<>(result, HttpStatus.CREATED);
-	return response; 
-
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     /**
@@ -82,7 +82,6 @@ public class FusionEngineRestController {
         // query for coordinates
         QueryResponseSimple result = FusionEngineDataStore.retrieveCoordinates(uuid);
 
-	ResponseEntity<QueryResponseSimple> response = new ResponseEntity<>(result, HttpStatus.OK);
-	return response; 
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
