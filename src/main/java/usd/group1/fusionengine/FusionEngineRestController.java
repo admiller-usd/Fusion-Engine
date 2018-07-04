@@ -8,6 +8,8 @@ package usd.group1.fusionengine;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,7 +45,7 @@ public class FusionEngineRestController {
      * @throws BadFormattedRequestException
      */
     @RequestMapping(method=RequestMethod.POST, path=submitEndpoint)
-    SubmitResponse submitCoordinates (
+    public ResponseEntity<SubmitResponse> submitCoordinates (
             @RequestParam(value="latitude") String latitude,
             @RequestParam(value="longitude") String longitude) throws BadFormattedRequestException {
         logger.info("Received request to submit coordinates: {}, {}",
@@ -61,8 +63,10 @@ public class FusionEngineRestController {
         FusionEngineDataStore.storeCoordinates(uuid, latResult, lonResult);
 
         // The response body
-        return new SubmitResponse(uuid, "Stored object with coordinates: " +
+        SubmitResponse result = new SubmitResponse(uuid, "Stored object with coordinates: " +
                 latResult + ", " + lonResult);
+
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     /**
@@ -72,10 +76,12 @@ public class FusionEngineRestController {
      * @throws NoUUIDFoundException
      */
     @RequestMapping(method=RequestMethod.GET, path=queryEndpoint)
-    public QueryResponseSimple QueryResult(
+    public ResponseEntity<QueryResponseSimple> QueryResult(
             @RequestParam(value="uuid") String uuid) throws NoUUIDFoundException {
 
         // query for coordinates
-        return FusionEngineDataStore.retrieveCoordinates(uuid);
+        QueryResponseSimple result = FusionEngineDataStore.retrieveCoordinates(uuid);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
