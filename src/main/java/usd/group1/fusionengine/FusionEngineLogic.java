@@ -1,3 +1,9 @@
+/*                                                 *
+ * ----- GROUP 1 ----- GROUP 1 ----- GROUP 1 ----- *
+ *                  Programmers:                   *
+ *                  Austin Miller                  *
+ *                 Kathrine Lavieri                *
+ *                                                 */
 package usd.group1.fusionengine;
 
 import org.apache.logging.log4j.LogManager;
@@ -39,6 +45,7 @@ public class FusionEngineLogic {
             logger.info("Coordinates {} and {} are in decimal format", Latitude, Longitude);
             lat = Double.valueOf(Latitude.trim());
             lng = Double.valueOf(Longitude.trim());
+            maximumMinumumCheck(lat, lng);
         }
         // Check if Minutes-Seconds Format
         // Minutes-Seconds should contain both apostrophes and quotes
@@ -65,7 +72,8 @@ public class FusionEngineLogic {
      * @param Latitude
      * @param Longitude
      */
-	private static void convertMinutesSeconds(String Latitude, String Longitude) {
+	private static void convertMinutesSeconds(String Latitude, String Longitude)
+			throws BadFormattedRequestException {
 
 	        logger.info("Convert: Received latitude {} and longitude {}", Latitude, Longitude);
 
@@ -93,6 +101,8 @@ public class FusionEngineLogic {
     			lng = -degree - minute - second;
     		}
 
+    		maximumMinumumCheck(lat, lng);
+
     		nf.setMaximumFractionDigits(5);
     		nf.setMinimumFractionDigits(5);
     	    System.out.println("Lat ="+nf.format(lat)+" Long ="+nf.format(lng));
@@ -103,37 +113,51 @@ public class FusionEngineLogic {
      * @param Latitude
      * @param Longitude
      */
-    	private static void convertMinutes(String Latitude, String Longitude) {
-    		 logger.info("Convert: Received latitude {} and longitude {}", Latitude, Longitude);
+    	private static void convertMinutes(String Latitude, String Longitude)
+				throws BadFormattedRequestException {
+			logger.info("Convert: Received latitude {} and longitude {}", Latitude, Longitude);
 
- 	        // Convert the Latitude
-     		String[] fields = Latitude.trim().split(" ");
-     		double degree = Double.parseDouble(fields[0].split("[^0-9]")[0]);
-     		double minute = Double.parseDouble(fields[1].split("[^0-9]")[0]) / 60.0;
+			// Convert the Latitude
+			String[] fields = Latitude.trim().split(" ");
+			double degree = Double.parseDouble(fields[0].split("[^0-9]")[0]);
+			double minute = Double.parseDouble(fields[1].split("[^0-9]")[0]) / 60.0;
 
-     		char direction = fields[2].charAt(0);
-     		if (direction == 'N') {
-     			lat = degree + minute;
-     		} else if (direction == 'S') {
-     			lat = -degree - minute;
-     		}
+			char direction = fields[2].charAt(0);
+			if (direction == 'N') {
+				lat = degree + minute;
+			} else if (direction == 'S') {
+				lat = -degree - minute;
+			}
 
-     		// Convert the Longitude
-     		fields = Longitude.trim().split(" ");
-     		degree = Double.parseDouble(fields[0].split("[^0-9]")[0]);
-     		minute = Double.parseDouble(fields[1].split("[^0-9]")[0]) / 60.0;
+			// Convert the Longitude
+			fields = Longitude.trim().split(" ");
+			degree = Double.parseDouble(fields[0].split("[^0-9]")[0]);
+			minute = Double.parseDouble(fields[1].split("[^0-9]")[0]) / 60.0;
 
-     		direction = fields[2].charAt(0);
-     		if (direction == 'E') {
-     			lng = degree + minute;
-     		} else if (direction == 'W' ) {
-     			lng = -degree - minute;
-     		}
+			direction = fields[2].charAt(0);
+			if (direction == 'E') {
+				lng = degree + minute;
+			} else if (direction == 'W') {
+				lng = -degree - minute;
+			}
 
-     		nf.setMaximumFractionDigits(5);
-     		nf.setMinimumFractionDigits(5);
-     	    System.out.println("Lat ="+nf.format(lat)+" Long ="+nf.format(lng));
-        }
+			maximumMinumumCheck(lat, lng);
+
+			nf.setMaximumFractionDigits(5);
+			nf.setMinimumFractionDigits(5);
+			System.out.println("Lat =" + nf.format(lat) + " Long =" + nf.format(lng));
+		}
+
+		private static void maximumMinumumCheck(double lat, double lon)
+				throws BadFormattedRequestException {
+
+    		if ((lat > 90.00000)||(lon > 180.00000)) {
+    			throw new BadFormattedRequestException("The values submitted are out of bounds");
+			}
+			if ((lat < -90.00000)||(lon < -180.00000)) {
+    			throw new BadFormattedRequestException("The values submitted are out of bounds");
+			}
+		}
 
 	public static String getLatitude(){
     		nf.setMaximumFractionDigits(5);

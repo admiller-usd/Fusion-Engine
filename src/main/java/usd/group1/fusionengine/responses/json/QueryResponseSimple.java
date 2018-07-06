@@ -6,8 +6,6 @@
  *                                                 */
 package usd.group1.fusionengine.responses.json;
 
-import java.util.UUID;
-
 /**
  * This class will be used to represent the json response
  * when querying for coordinates

@@ -18,7 +18,7 @@ import java.util.Map;
 
 /**
  * Class that persists the coordinates in memory
- * Can be queried by other services by UUID String
+ * Coordinates can be queried by UUID
  */
 public class FusionEngineDataStore {
 
@@ -49,7 +49,7 @@ public class FusionEngineDataStore {
     }
 
     /**
-     * Method retrieves a set of coordinates by a given UUID
+     * Method that retrieves a set of coordinates by a given UUID
      * @param uuid
      * @return
      * @throws NoUUIDFoundException
