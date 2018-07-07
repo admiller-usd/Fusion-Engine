@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import usd.group1.fusionengine.exceptions.BadFormattedRequestException;
 import usd.group1.fusionengine.exceptions.NoUUIDFoundException;
-import usd.group1.fusionengine.responses.json.QueryResponseSimple;
+import usd.group1.fusionengine.responses.json.QueryResponse;
 
 import java.util.UUID;
 
@@ -53,7 +53,7 @@ public class FusionEngineLogicTest {
         String lonResult = FusionEngineLogic.getLongitude();
 
         FusionEngineDataStore.storeCoordinates(uuid, latResult, lonResult);
-        QueryResponseSimple response = FusionEngineDataStore.retrieveCoordinates(uuid);
+        QueryResponse response = FusionEngineDataStore.retrieveCoordinates(uuid);
 
         // Assert
         Assert.assertEquals("-3.00000", response.getLatitude());
@@ -75,7 +75,7 @@ public class FusionEngineLogicTest {
         String lonResult = FusionEngineLogic.getLongitude();
 
         FusionEngineDataStore.storeCoordinates(uuid, latResult, lonResult);
-        QueryResponseSimple response = FusionEngineDataStore.retrieveCoordinates(uuid);
+        QueryResponse response = FusionEngineDataStore.retrieveCoordinates(uuid);
 
         // Assert
         Assert.assertEquals("32.00000", response.getLatitude());
@@ -97,7 +97,7 @@ public class FusionEngineLogicTest {
         String lonResult = FusionEngineLogic.getLongitude();
 
         FusionEngineDataStore.storeCoordinates(uuid, latResult, lonResult);
-        QueryResponseSimple response = FusionEngineDataStore.retrieveCoordinates(uuid);
+        QueryResponse response = FusionEngineDataStore.retrieveCoordinates(uuid);
         System.out.println(response.getLatitude());
 
         // Assert
@@ -120,7 +120,7 @@ public class FusionEngineLogicTest {
         String lonResult = FusionEngineLogic.getLongitude();
 
         FusionEngineDataStore.storeCoordinates(uuid, latResult, lonResult);
-        QueryResponseSimple response = FusionEngineDataStore.retrieveCoordinates(uuid);
+        QueryResponse response = FusionEngineDataStore.retrieveCoordinates(uuid);
         System.out.println(response.getLatitude());
 
         // Assert
@@ -176,7 +176,7 @@ public class FusionEngineLogicTest {
         String lonResult = FusionEngineLogic.getLongitude();
 
         FusionEngineDataStore.storeCoordinates(uuid, latResult, lonResult);
-        QueryResponseSimple response = FusionEngineDataStore.retrieveCoordinates(uuid);
+        QueryResponse response = FusionEngineDataStore.retrieveCoordinates(uuid);
         System.out.println(response.getLatitude());
 
         // Assert
@@ -199,7 +199,7 @@ public class FusionEngineLogicTest {
         String lonResult = FusionEngineLogic.getLongitude();
 
         FusionEngineDataStore.storeCoordinates(uuid, latResult, lonResult);
-        QueryResponseSimple response = FusionEngineDataStore.retrieveCoordinates(uuid);
+        QueryResponse response = FusionEngineDataStore.retrieveCoordinates(uuid);
         System.out.println(response.getLatitude());
 
         // Assert
@@ -266,7 +266,7 @@ public class FusionEngineLogicTest {
         String lonResult = FusionEngineLogic.getLongitude();
 
         FusionEngineDataStore.storeCoordinates(uuid, latResult, lonResult);
-        QueryResponseSimple response = FusionEngineDataStore.retrieveCoordinates(uuid);
+        QueryResponse response = FusionEngineDataStore.retrieveCoordinates(uuid);
         System.out.println(response.getLatitude());
 
         // Assert
@@ -291,7 +291,7 @@ public class FusionEngineLogicTest {
         String lonResult = FusionEngineLogic.getLongitude();
 
         FusionEngineDataStore.storeCoordinates(uuid, latResult, lonResult);
-        QueryResponseSimple response = FusionEngineDataStore.retrieveCoordinates(uuid);
+        QueryResponse response = FusionEngineDataStore.retrieveCoordinates(uuid);
         System.out.println(response.getLatitude());
 
         // Assert
@@ -314,7 +314,7 @@ public class FusionEngineLogicTest {
         String lonResult = FusionEngineLogic.getLongitude();
 
         FusionEngineDataStore.storeCoordinates(uuid, latResult, lonResult);
-        QueryResponseSimple response = FusionEngineDataStore.retrieveCoordinates(uuid);
+        QueryResponse response = FusionEngineDataStore.retrieveCoordinates(uuid);
         System.out.println(response.getLatitude());
 
         // Assert

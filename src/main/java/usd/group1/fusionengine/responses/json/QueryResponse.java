@@ -10,13 +10,13 @@ package usd.group1.fusionengine.responses.json;
  * This class will be used to represent the json response
  * when querying for coordinates
  */
-public class QueryResponseSimple {
+public class QueryResponse {
 
     private final String uuid;
     private final String latitude;
     private final String longitude;
 
-    public QueryResponseSimple(String uuid, String latitude, String longitude) {
+    public QueryResponse(String uuid, String latitude, String longitude) {
         this.uuid = uuid;
         this.latitude = latitude;
         this.longitude = longitude;

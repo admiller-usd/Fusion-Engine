@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import usd.group1.fusionengine.exceptions.BadFormattedRequestException;
 import usd.group1.fusionengine.exceptions.NoUUIDFoundException;
-import usd.group1.fusionengine.responses.json.QueryResponseSimple;
+import usd.group1.fusionengine.responses.json.QueryResponse;
 import usd.group1.fusionengine.responses.json.SubmitResponse;
 
 import java.util.UUID;
@@ -76,11 +76,11 @@ public class FusionEngineRestController {
      * @throws NoUUIDFoundException
      */
     @RequestMapping(method=RequestMethod.GET, path=queryEndpoint)
-    public ResponseEntity<QueryResponseSimple> QueryResult(
+    public ResponseEntity<QueryResponse> QueryResult(
             @RequestParam(value="uuid") String uuid) throws NoUUIDFoundException {
 
         // query for coordinates
-        QueryResponseSimple result = FusionEngineDataStore.retrieveCoordinates(uuid);
+        QueryResponse result = FusionEngineDataStore.retrieveCoordinates(uuid);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
