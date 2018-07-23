@@ -37,6 +37,9 @@ public class FusionEngineRestController {
     /* REST Endpoint for querying for coordinates */
     private static final String queryEndpoint = "/query";
 
+    /* REST Endpoint for basic homepage */
+    private static final String homePageEndpoint = "/";
+
     /**
      * A REST Controller which handles requests to convert and store coordinate data
      * @param latitude
@@ -83,5 +86,11 @@ public class FusionEngineRestController {
         QueryResponse result = FusionEngineDataStore.retrieveCoordinates(uuid);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(method=RequestMethod.GET, path=homePageEndpoint)
+    public void homePage() {
+
     }
 }
