@@ -27,9 +27,6 @@ import java.util.UUID;
 @RestController
 public class FusionEngineRestController {
 
-    @Value("${spring.application.name}")
-    String appName;
-
     /* The constant logger */
     private static final Logger logger = LogManager.getLogger(
             FusionEngineRestController.class);
@@ -91,9 +88,4 @@ public class FusionEngineRestController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @RequestMapping(method=RequestMethod.GET, path=homePageEndpoint)
-    public String homePage(Model model) {
-      model.addAttribute("appName", appName);
-      return "index";
-    }
 }
