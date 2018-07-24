@@ -1,4 +1,7 @@
-# Fusion-Engine
+# Fusion-Engine: RELEASE 1.0.0
+## New for this release:
+Now deployed to Heroku! Visit the app at https://fusion-engine-cyber560.herokuapp.com
+### About
 An implementation of the Fusion Engine for Cyber 560
 
 The Fusion Engine, developed by GROUP 1 Inc., is a web service that accepts RESTful interactions to process coordinate metadata. 
