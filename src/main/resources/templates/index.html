@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage for Fusion Engine</title>
+</head>
+<body>
+    <h1>Welcome to the Fusion Engine!</h1>
+    <p>This is a web service that accepts RESTful interactions to process coordinate metadata.</br>
+        You can submit new coordinates via the submit endpoint, or query for data via the query endpoint.
+    </p>
+
+    <h3>How to submit coordinates</h3>
+    <p>Must POST to the endpoint /submit with two parameters: latitude and longitude</br>
+        Example: /submit?latitude=37.42512&longitude=-122.08334</br>
+        The json response body will return a UUID which can be used to query for results.
+    </p>
+
+    <h3>How to query for coordinates</h3>
+    <p>Must GET to the endpoint /query with one parameter: uuid</br>
+        Example: /submit?uuid=0793821e-0534-43a2-9b62-456477c924e6</br>
+        The json response body will return your corresponding coordinate pair.
+    </p>
+
+    <h3 style="color:green">Server Online</h3>
+</body>
+</html>
