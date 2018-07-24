@@ -44,7 +44,7 @@ public class FusionEngineRedisStore {
     public QueryResponse retrieveCoordinates(String uuid)
             throws RedisProcessingException, NoUUIDFoundException {
 
-        CoordinatePair retrievedPair = null;
+        CoordinatePair retrievedPair;
 
         // Try to retrieve the data
         try {
