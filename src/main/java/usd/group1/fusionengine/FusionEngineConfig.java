@@ -10,7 +10,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+import usd.group1.fusionengine.redis.entities.CoordinatePair;
 
+/**
+ * A Configuration class for the Fusion Engine where we
+ * can declare all of our beans
+ */
 @Configuration
 public class FusionEngineConfig {
 
@@ -29,5 +36,8 @@ public class FusionEngineConfig {
         template.setConnectionFactory(jedisConnectionFactory());
         return template;
     }
+
+    @Repository
+    public interface CoordinateRepository extends CrudRepository<CoordinatePair, String> {}
 
 }
