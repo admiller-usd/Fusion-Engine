@@ -25,6 +25,14 @@ public class FusionEngineRedisStore {
     /* The Repository Interface */
     FusionEngineConfig.CoordinateRepository coordinateRepository;
 
+    /**
+     * Method that stores a coordinate pair in redis. Requires a uuid,
+     * a latitude coordinate and a longitude coordinate
+     * @param uuid
+     * @param latitude
+     * @param longitude
+     * @throws RedisProcessingException
+     */
     public void storeCoordinates(String uuid, String latitude, String longitude)
             throws RedisProcessingException {
 
@@ -41,9 +49,17 @@ public class FusionEngineRedisStore {
         }
     }
 
+    /**
+     * Method that queries redis for a coordinate pair. Requires a uuid.
+     * @param uuid
+     * @return QueryResponse
+     * @throws RedisProcessingException
+     * @throws NoUUIDFoundException
+     */
     public QueryResponse retrieveCoordinates(String uuid)
             throws RedisProcessingException, NoUUIDFoundException {
 
+        // The coordinate pair object
         CoordinatePair retrievedPair;
 
         // Try to retrieve the data

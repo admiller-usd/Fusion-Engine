@@ -6,8 +6,10 @@
 *                                                 */
 package usd.group1.fusionengine;
 
+import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import usd.group1.fusionengine.exceptions.BadFormattedRequestException;
 import usd.group1.fusionengine.exceptions.NoUUIDFoundException;
+import usd.group1.fusionengine.exceptions.RedisProcessingException;
 import usd.group1.fusionengine.responses.json.QueryResponse;
 import usd.group1.fusionengine.responses.json.SubmitResponse;
 
@@ -40,6 +43,18 @@ public class FusionEngineRestController {
     /* REST Endpoint for basic homepage */
     private static final String homePageEndpoint = "/";
 
+    /* Brought in from the config class */
+    @Autowired
+    private FusionEngineRedisStore redisStore;
+
+    public FusionEngineRestController(FusionEngineRedisStore redisStore) {
+
+        // Validate that the bean was auto-wired in properly
+        Validate.notNull(redisStore);
+
+        this.redisStore = redisStore;
+    }
+
     /**
      * A REST Controller which handles requests to convert and store coordinate data
      * @param latitude
@@ -50,7 +65,8 @@ public class FusionEngineRestController {
     @RequestMapping(method=RequestMethod.POST, path=submitEndpoint)
     public ResponseEntity<SubmitResponse> submitCoordinates (
             @RequestParam(value="latitude") String latitude,
-            @RequestParam(value="longitude") String longitude) throws BadFormattedRequestException {
+            @RequestParam(value="longitude") String longitude)
+            throws BadFormattedRequestException, RedisProcessingException {
         logger.info("Received request to submit coordinates: {}, {}",
                 latitude, longitude);
 
@@ -62,8 +78,8 @@ public class FusionEngineRestController {
         String latResult = FusionEngineLogic.getLatitude();
         String lonResult = FusionEngineLogic.getLongitude();
 
-        // Persist the results
-        FusionEngineDataStore.storeCoordinates(uuid, latResult, lonResult);
+        // Persist the results in redis
+        redisStore.storeCoordinates(uuid, latResult, lonResult);
 
         // The response body
         SubmitResponse result = new SubmitResponse(uuid, "Stored object with coordinates: " +
@@ -80,10 +96,11 @@ public class FusionEngineRestController {
      */
     @RequestMapping(method=RequestMethod.GET, path=queryEndpoint)
     public ResponseEntity<QueryResponse> QueryResult(
-            @RequestParam(value="uuid") String uuid) throws NoUUIDFoundException {
+            @RequestParam(value="uuid") String uuid) throws NoUUIDFoundException,
+            RedisProcessingException {
 
         // query for coordinates
-        QueryResponse result = FusionEngineDataStore.retrieveCoordinates(uuid);
+        QueryResponse result = redisStore.retrieveCoordinates(uuid);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

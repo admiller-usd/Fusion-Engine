@@ -6,6 +6,7 @@
  *                                                 */
 package usd.group1.fusionengine;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -21,10 +22,11 @@ import usd.group1.fusionengine.redis.entities.CoordinatePair;
 @Configuration
 public class FusionEngineConfig {
 
-    private static final String redisUrlEnvironment = "REDIS_URL";
+    @Value("${REDIS_URL}")
+    private String redisUrlEnvironment;
 
     @Bean
-    JedisConnectionFactory jedisConnectionFactory() {
+    public JedisConnectionFactory jedisConnectionFactory() {
         JedisConnectionFactory jedisFactory = new JedisConnectionFactory();
         jedisFactory.setHostName(System.getenv(redisUrlEnvironment));
         return jedisFactory;
@@ -39,5 +41,10 @@ public class FusionEngineConfig {
 
     @Repository
     public interface CoordinateRepository extends CrudRepository<CoordinatePair, String> {}
+
+    @Bean
+    public FusionEngineRedisStore fusionEngineRedisStore() {
+        return new FusionEngineRedisStore();
+    }
 
 }
