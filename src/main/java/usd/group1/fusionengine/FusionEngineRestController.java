@@ -6,7 +6,6 @@
 *                                                 */
 package usd.group1.fusionengine;
 
-import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,14 +45,6 @@ public class FusionEngineRestController {
     /* Brought in from the config class */
     @Autowired
     private FusionEngineRedisStore redisStore;
-
-    public FusionEngineRestController(FusionEngineRedisStore redisStore) {
-
-        // Validate that the bean was auto-wired in properly
-        Validate.notNull(redisStore);
-
-        this.redisStore = redisStore;
-    }
 
     /**
      * A REST Controller which handles requests to convert and store coordinate data
